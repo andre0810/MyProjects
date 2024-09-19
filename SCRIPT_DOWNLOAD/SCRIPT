@@ -1,0 +1,129 @@
+#%%
+#Importando bibliotecas
+import pandas as pd
+import pyodbc
+import os
+import pyautogui
+import sqlalchemy
+from sqlalchemy.engine import URL
+from datetime import datetime
+import sys
+import warnings
+warnings.filterwarnings('ignore')
+#%%
+#Conectando com o servidor SQL
+#print("Conectando com o servidor SQL")
+#conn_gnu = pyodbc.connect(
+#    "Driver=(SQL Server Native Client 11.0):"
+#    "Server=;"
+#    "Database=;"
+#    "Trusted_Connection=yes;")
+#cursor = conn_gnu.cursor()
+#connection_string = (
+#    r"Driver=SQL Server Native Client 11.0;"
+#    r"Server=;"
+#    r"Database=;"
+#    r"Trusted_Connection=yes;"
+#)
+#connection_url = URL.create(
+#    "mssql+pyodbc",
+#    query={"odbc_connect": connection_string}
+#)
+#engine = sqlalchemy.create_engine(connection_url, fast_executemany=True, connect_args={'connect_timeout': 10}, echo=False)
+#conn = engine.connect()
+#print("Conexão com o servidor SQL Server executada com êxito!")
+#%% Testa a conexão com o Banco de Dados
+try:
+    with engine.connect() as con:
+        con.execute(sqlalchemy.text("SELECT 1"))
+        print("Conexão SQL Alchemy válida!')
+except Exception as e:
+    print(f'Conexão SQL Alchemy invalida: {str(e)}')
+
+#%%
+#Buscando local dos arquivos
+print("Buscando os locais dos arquivos...")
+hoje = datetime.now()
+pasta = ''
+#Listas das abas ou Sheet name do Excel
+abas = ['Plan1', 'Plan2', 'Plan3', 'Plan4', 'Plan5', 'Plan6', 
+        'Plan7', 'Plan8', 'Plan9', 'Plan10', 'Plan11', 'Plan12']
+
+#Declarando os dataframes que vão 6eber cada aba
+dataframe_1 =[]
+dataframe_2 =[]
+dataframe_3 =[]
+dataframe_4 =[]
+dataframe_5 =[]
+dataframe_6 =[]
+dataframe_7 =[]
+dataframe_8 =[]
+dataframe_9 =[]
+dataframe_10 =[]
+dataframe_11 =[]
+dataframe_12 =[]
+print("Locais dos arquivos encontradas!")
+
+#%%
+#For para ler os arquivos da pasta, bem como fazer a leitura dos dados nas abas
+try:
+    print("Realizando a leitura de cada aba das tabelas...
+    for arquivo in os.listdir(pasta):
+        if arquivo.endswith('.xlsx'):
+            caminho_arquivo = os.path.join(pasta,arquivo)
+            for aba in abas:
+                if aba == 'Plan1':
+                    df_1 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_1.append(df_1)
+                elif aba == 'Plan2':
+                    df_2 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_2.append(df_2)
+                elif aba == 'Plan3':
+                    df_3 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_3.append(df_3)
+                elif aba == 'Plan4':
+                    df_4= pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_4.append(df_4)
+                elif aba == 'Plan5':
+                    df_5 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_5.append(df_5)
+                elif aba == 'Plan6':
+                    df_6 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_6.append(df_6)
+                elif aba == 'Plan7':
+                    df_7 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_7.append(df_7)
+                elif aba == 'Plan8':
+                    df_8 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_8,append(df_8)
+                elif aba == 'Plan9':
+                    df_9 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_9.append(df_9)
+                elif aba == 'Plan10':
+                    df_10 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_10.append(df_10)                  
+                elif aba == 'Plan11':
+                    df_11 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_11.append(df_11)  
+                elif aba == 'Plan12':
+                    df_12 = pd.read_excel(caminho_arquivo, sheet_name = aba)
+                    dataframe_12.append(df_12)
+    # Armazenar os valores na variável concatenando o que está no dataframe
+    df_1 = pd.concat(dataframe_1, ignore_index = True)  
+    df_2 = pd.concat(dataframe_2, ignore_index = True)
+    df_3 = pd.concat(dataframe_3, ignore_index = True)
+    df_4 = pd.concat(dataframe_4, ignore_index = True)
+    df_5 = pd.concat(dataframe_5, ignore_index = True)
+    df_6 = pd.concat(dataframe_6, ignore_index = True)
+    df_7 = pd.concat(dataframe_7, ignore_index = True)
+    df_8 = pd.concat(dataframe_8, ignore_index = True)
+    df_9 = pd.concat(dataframe_9, ignore_index = True)
+    df_10 = pd.concat(dataframe_10, ignore_index = True)
+    df_11 = pd.concat(dataframe_11, ignore_index = True)
+    df_12 = pd.concat(dataframe_12, ignore_index = True)
+except PermissionError:
+    pyautogui.alert("Erro ao executar O código. Para proceder com o execução, favor fechar o seguinte arquivo: " + caminho_arquivo)
+    sys.exit()
+except:
+    pyautogui.alert("Erro de leitura do seguinte arquivo do RST:"  + caminho_arquivo)
+    sys.exit()
